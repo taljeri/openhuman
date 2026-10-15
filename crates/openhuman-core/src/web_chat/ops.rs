@@ -3,6 +3,7 @@
 //! coordinate over, and the guards (wall-clock backstop, budget correlation,
 //! Sentry suppression) applied around every turn.
 
+mod autonomous_turn;
 mod budget_correlation;
 mod channel_ops;
 mod followups;
@@ -15,8 +16,8 @@ mod test_hooks;
 mod turn_guards;
 
 pub(super) use budget_correlation::{
-    classify_budget_correlation, clear_budget_signal, has_fresh_budget_signal,
-    record_budget_signal, BudgetCorrelation,
+    BudgetCorrelation, classify_budget_correlation, clear_budget_signal, has_fresh_budget_signal,
+    record_budget_signal,
 };
 
 pub use channel_ops::{
@@ -24,8 +25,9 @@ pub use channel_ops::{
     channel_web_queue_clear, channel_web_queue_remove, channel_web_queue_status,
 };
 
-pub use start_chat::{start_chat, StartChatError};
-pub use system_turn::{run_system_turn_on_thread, SESSION_CHECKOUT_FAILURE, SYSTEM_CLIENT_ID};
+pub(crate) use autonomous_turn::start_autonomous_turn;
+pub use start_chat::{StartChatError, start_chat};
+pub use system_turn::{SESSION_CHECKOUT_FAILURE, SYSTEM_CLIENT_ID, run_system_turn_on_thread};
 
 #[cfg(test)]
 pub use state::drain_queued_turns_for_test;
@@ -47,15 +49,15 @@ pub(crate) use state::{event_session_id_for, key_for};
 pub(crate) use state::{key_in, unscope_in};
 
 #[cfg(any(test, debug_assertions))]
-pub use test_hooks::set_test_forced_run_chat_task_error;
-#[cfg(any(test, debug_assertions))]
 pub use test_hooks::RUN_CHAT_TASK_TEST_LOCK;
 #[cfg(any(test, debug_assertions))]
-pub use test_hooks::{set_test_park_after_run, set_test_run_chat_task_block, TestRunChatTaskBlock};
+pub use test_hooks::set_test_forced_run_chat_task_error;
 #[cfg(any(test, debug_assertions))]
 pub(super) use test_hooks::{
     TEST_FORCED_RUN_CHAT_TASK_ERROR, TEST_PARK_AFTER_RUN, TEST_RUN_CHAT_TASK_BLOCK,
 };
+#[cfg(any(test, debug_assertions))]
+pub use test_hooks::{TestRunChatTaskBlock, set_test_park_after_run, set_test_run_chat_task_block};
 
 pub(crate) use turn_guards::sentry_suppression_reason;
 #[cfg(test)]

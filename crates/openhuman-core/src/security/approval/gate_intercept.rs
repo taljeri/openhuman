@@ -205,8 +205,8 @@ impl ApprovalGate {
         // `auto_approve_all_allows_a_remote_triage_dispatch_without_an_audit_row`
         // below pins that outcome, so a change to this exclusion list has to
         // confront the decision rather than discover it.
-        let auto_all =
-            self.is_auto_approve_all_enabled(&turn_ctx) && !matches!(&origin, AgentTurnOrigin::Unknown);
+        let auto_all = self.is_auto_approve_all_enabled(&turn_ctx)
+            && !matches!(&origin, AgentTurnOrigin::Unknown);
 
         if auto_all && !forced {
             // `origin_class` is the sanitized variant label (no thread/client
@@ -227,9 +227,7 @@ impl ApprovalGate {
             return (GateOutcome::Allow, None);
         }
 
-        if !forced
-            && !matches!(&origin, AgentTurnOrigin::Unknown)
-            && turn_ctx.approvals_disabled()
+        if !forced && !matches!(&origin, AgentTurnOrigin::Unknown) && turn_ctx.approvals_disabled()
         {
             tracing::info!(
                 tool = tool_name,
@@ -247,7 +245,10 @@ impl ApprovalGate {
         // live policy) takes effect on the very next tool call; fall back to the
         // gate's boot-time config when no live policy is installed (e.g. a CLI
         // invocation that never started a session runtime, or a unit test).
-        if !forced && !bypass_auto_approve_shortcut && self.tool_is_auto_approved(&turn_ctx, tool_name) {
+        if !forced
+            && !bypass_auto_approve_shortcut
+            && self.tool_is_auto_approved(&turn_ctx, tool_name)
+        {
             tracing::debug!(
                 tool = tool_name,
                 "[approval::gate] auto_approve allowlist hit, skipping prompt"
@@ -366,14 +367,11 @@ impl ApprovalGate {
                 );
             }
             AgentTurnOrigin::TrustedAutomation {
-                source: TrustedAutomationSource::Background,
+                source:
+                    TrustedAutomationSource::AutonomousWork | TrustedAutomationSource::Background,
                 job_id,
             } => {
-                tracing::debug!(
-                    tool = tool_name,
-                    job_id = %job_id,
-                    "[approval::gate] trusted internal background job — allowing without prompt"
-                );
+                tracing::debug!(tool = tool_name, job_id = %job_id, "[approval::gate] trusted automation slice — allowing");
                 return (GateOutcome::Allow, None);
             }
             AgentTurnOrigin::TrustedAutomation {
@@ -622,7 +620,9 @@ impl ApprovalGate {
             Err(resolution) => {
                 return (
                     GateOutcome::Deny {
-                        reason: format!("{POLICY_DENIED_MARKER} Agent approval registration closed: {resolution}"),
+                        reason: format!(
+                            "{POLICY_DENIED_MARKER} Agent approval registration closed: {resolution}"
+                        ),
                     },
                     None,
                 );
@@ -634,7 +634,9 @@ impl ApprovalGate {
                 tracing::error!(error = %err, tool = tool_name, "[approval::gate] failed to persist pending row — failing closed");
                 return (
                     GateOutcome::Deny {
-                        reason: format!("{POLICY_DENIED_MARKER} Approval gate could not persist the request — denying for safety: {err}"),
+                        reason: format!(
+                            "{POLICY_DENIED_MARKER} Approval gate could not persist the request — denying for safety: {err}"
+                        ),
                     },
                     None,
                 );

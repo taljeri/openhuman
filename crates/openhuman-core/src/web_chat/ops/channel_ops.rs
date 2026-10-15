@@ -2,10 +2,10 @@
 //! cancelling in-flight turns (primary and parallel, scoped or unscoped), and
 //! inspecting/clearing a thread's run queue.
 
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 
-use crate::core::runtime::DispatchCtx;
 use crate::core::Outcome;
+use crate::core::runtime::DispatchCtx;
 use crate::web_chat::WebChannelEvent;
 
 use super::super::event_bus::publish_web_channel_event_in;
@@ -156,6 +156,10 @@ async fn cancel_chat_inner(
         crate::agent::orchestration::background_delivery::kick_delivery(ctx, thread_id);
     }
     let subagents_cancelled = if request_id.is_none() {
+        if let Ok(config) = crate::config::rpc::load_config_with_timeout().await {
+            let _ = crate::agent::autonomous::store::pause(&config.workspace_dir, thread_id, None)
+                .await;
+        }
         // Gate completion recording before aborting: Tokio abort is
         // cooperative, so a child already finishing can otherwise enqueue in
         // the gap between abort and the queue sweep.

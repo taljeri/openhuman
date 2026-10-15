@@ -35,18 +35,18 @@ use std::time::Duration;
 
 use tinyagents_tasks::{
     CompletionRecord, CompletionResult, CompletionRouter, CompletionState, CompletionStatus,
-    CompletionStore, DriverCompletionStore, InMemoryCompletionStore, NotifyMode, RecordOutcome,
-    TombstoneOutcome, DEFAULT_MAX_ATTEMPTS,
+    CompletionStore, DEFAULT_MAX_ATTEMPTS, DriverCompletionStore, InMemoryCompletionStore,
+    NotifyMode, RecordOutcome, TombstoneOutcome,
 };
 
 use super::completion_notice::BackgroundCompletionFormatter;
-pub(crate) use super::completion_notice::{BackgroundAgentOutcome, AWAITING_INPUT_LABEL};
+pub(crate) use super::completion_notice::{AWAITING_INPUT_LABEL, BackgroundAgentOutcome};
 pub(crate) use super::completion_target::CompletionTarget;
-pub(crate) use super::completion_target::{claim_recovery, forget_recovery};
 #[cfg(test)]
 pub(crate) use super::completion_target::{
-    forget_workspace_for_test, install_store_for_test, TestWorkspace,
+    TestWorkspace, forget_workspace_for_test, install_store_for_test,
 };
+pub(crate) use super::completion_target::{claim_recovery, forget_recovery};
 
 /// How long a settled record (delivered / gave up / tombstoned) is kept before
 /// compaction drops it. Dropping a settled record also drops its dedupe and its
@@ -710,3 +710,11 @@ mod tests;
 #[cfg(test)]
 #[path = "background_completions_release_tests.rs"]
 mod release_tests;
+
+pub fn has_pending_for_thread(thread_id: &str) -> bool {
+    if let Some(ws) = workspace_for_thread(&DispatchCtx::ambient(), thread_id) {
+        !pending_for(&ws, thread_id).is_empty()
+    } else {
+        false
+    }
+}

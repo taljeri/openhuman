@@ -28,6 +28,7 @@ mod loader;
 #[path = "fleet_prompt_tests.rs"]
 mod fleet_prompt_tests;
 
+pub mod coding_worker;
 pub mod critic;
 pub mod image_agent;
 pub mod morning_briefing;
@@ -41,4 +42,4 @@ pub mod trigger_triage;
 pub mod video_agent;
 pub mod vision_agent;
 
-pub use loader::{load_builtins, validate_tier_hierarchy, BuiltinAgent, BUILTINS};
+pub use loader::{BUILTINS, BuiltinAgent, load_builtins, validate_tier_hierarchy};

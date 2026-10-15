@@ -412,6 +412,7 @@ pub fn start_bootstrap_jobs(services: ServiceSet, config: &Config) {
         log::debug!("[runtime.bootstrap] task-source polling disabled by ServiceSet");
     }
 
+    crate::agent::autonomous::service::start();
     log::debug!("[runtime.bootstrap] bootstrap job dispatch complete");
 }
 
@@ -494,8 +495,8 @@ pub fn spawn_socket_auto_connect(
                     Ok(Some(t)) => t,
                     Ok(None) => {
                         log::info!(
-                        "[socket] No session token stored — skipping auto-connect (will connect after login)"
-                    );
+                            "[socket] No session token stored — skipping auto-connect (will connect after login)"
+                        );
                         return;
                     }
                     Err(e) => {

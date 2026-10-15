@@ -3,7 +3,7 @@
 use super::*;
 
 pub(super) const CAPABILITIES: &[Capability] = &[
-Capability {
+    Capability {
         id: "workflows.discover",
         name: "Discover Workflows",
         domain: "workflows",
@@ -13,7 +13,7 @@ Capability {
         status: CapabilityStatus::Stable,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "workflows.install",
         name: "Install Workflows",
         domain: "workflows",
@@ -35,7 +35,7 @@ Capability {
             ],
         }),
     },
-Capability {
+    Capability {
         id: "workflows.configure",
         name: "Configure Workflows",
         domain: "workflows",
@@ -45,7 +45,7 @@ Capability {
         status: CapabilityStatus::Stable,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "workflows.connection_status",
         name: "Monitor Workflow Connection Status",
         domain: "workflows",
@@ -55,7 +55,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "workflows.sync_manual",
         name: "Manually Sync Workflow Data",
         domain: "workflows",
@@ -65,33 +65,34 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: DERIVED_TO_BACKEND,
     },
-Capability {
+    Capability {
         id: "workflows.web_search",
         name: "Web Search, Answers and Page Contents",
         domain: "workflows",
         category: CapabilityCategory::Workflows,
-        description:
-            "Search the web, get grounded answers with citations, and read page contents through several providers at once. Signed-in users get Exa and Gemini with Google Search grounding included; Brave, Tavily, Querit, Parallel, Seltz, SearXNG, and your own Exa or Gemini keys can be added. Each capability falls back to the next provider when one is unavailable.",
+        description: "Search the web, get grounded answers with citations, and read page contents through several providers at once. Signed-in users get Exa and Gemini with Google Search grounding included; Brave, Tavily, Querit, Parallel, Seltz, SearXNG, and your own Exa or Gemini keys can be added. Each capability falls back to the next provider when one is unavailable.",
         how_to: "Connections > Search to choose providers and their order, then ask the assistant to look something up",
         status: CapabilityStatus::Beta,
         privacy: Some(CapabilityPrivacy {
             leaves_device: true,
             data_kind: PrivacyDataKind::Derived,
-            destinations: &["OpenHuman backend (managed search)", "Your configured search providers"],
+            destinations: &[
+                "OpenHuman backend (managed search)",
+                "Your configured search providers",
+            ],
         }),
     },
-Capability {
+    Capability {
         id: "workflows.tinyfish_web_automation",
         name: "TinyFish Web Automation",
         domain: "workflows",
         category: CapabilityCategory::Workflows,
-        description:
-            "Search the web, render JavaScript-heavy pages, and run goal-based browser automations through TinyFish.",
+        description: "Search the web, render JavaScript-heavy pages, and run goal-based browser automations through TinyFish.",
         how_to: "Conversations > Ask the assistant to search, fetch, or automate a website with TinyFish",
         status: CapabilityStatus::Beta,
         privacy: DERIVED_TO_BACKEND,
     },
-Capability {
+    Capability {
         id: "workflows.computer_browser_automation",
         name: "Browser Automation",
         domain: "workflows",
@@ -102,10 +103,13 @@ Capability {
         privacy: Some(CapabilityPrivacy {
             leaves_device: true,
             data_kind: PrivacyDataKind::Raw,
-            destinations: &["Visited websites", "OpenRouter, OpenHuman backend, OpenJev or Sage for task decisions"],
+            destinations: &[
+                "Visited websites",
+                "OpenRouter, OpenHuman backend, OpenJev or Sage for task decisions",
+            ],
         }),
     },
-Capability {
+    Capability {
         id: "workflows.toggle_enabled",
         name: "Enable or Disable Workflows",
         domain: "workflows",
@@ -115,7 +119,7 @@ Capability {
         status: CapabilityStatus::Stable,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "workflows.open_connections_hub",
         name: "Open Connections Hub",
         domain: "workflows",
@@ -125,26 +129,24 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "composio.direct_mode",
         name: "Composio Direct Mode (BYO API Key)",
         domain: "workflows",
         category: CapabilityCategory::Workflows,
-        description:
-            "Route Composio tool calls directly to backend.composio.dev with your own API key, \
+        description: "Route Composio tool calls directly to backend.composio.dev with your own API key, \
              bypassing the OpenHuman backend proxy. Tool execution only — trigger webhooks still \
              require backend mode.",
         how_to: "Settings > Skills > Composio > Direct mode",
         status: CapabilityStatus::Beta,
         privacy: COMPOSIO_DIRECT_CREDENTIALS,
     },
-Capability {
+    Capability {
         id: "composio.direct_mode_triggers_gap",
         name: "Composio Triggers (Direct Mode — Limited)",
         domain: "workflows",
         category: CapabilityCategory::Workflows,
-        description:
-            "Composio real-time trigger webhooks (Gmail new-message, Slack new-message, …) \
+        description: "Composio real-time trigger webhooks (Gmail new-message, Slack new-message, …) \
              currently arrive over wss://api.tinyhumans.ai/socket.io and require backend mode. \
              Direct-mode users get synchronous tool execution but not async trigger push in \
              this release.",
@@ -152,7 +154,7 @@ Capability {
         status: CapabilityStatus::ComingSoon,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "workflows.connect_google",
         name: "Connect Google",
         domain: "workflows",
@@ -162,7 +164,7 @@ Capability {
         status: CapabilityStatus::ComingSoon,
         privacy: LOCAL_CREDENTIALS,
     },
-Capability {
+    Capability {
         id: "workflows.connect_notion",
         name: "Connect Notion",
         domain: "workflows",
@@ -172,7 +174,7 @@ Capability {
         status: CapabilityStatus::ComingSoon,
         privacy: LOCAL_CREDENTIALS,
     },
-Capability {
+    Capability {
         id: "workflows.connect_web3_wallet",
         name: "Connect Web3 Wallet",
         domain: "workflows",
@@ -182,7 +184,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: LOCAL_CREDENTIALS,
     },
-Capability {
+    Capability {
         id: "workflows.wallet_execution",
         name: "Wallet Execution Tools",
         domain: "wallet",
@@ -192,7 +194,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: LOCAL_CREDENTIALS,
     },
-Capability {
+    Capability {
         id: "workflows.web3_defi",
         name: "Web3 Swaps & Bridges",
         domain: "web3",
@@ -202,7 +204,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: LOCAL_CREDENTIALS,
     },
-Capability {
+    Capability {
         id: "workflows.x402_payments",
         name: "x402 Machine Payments",
         domain: "x402",
@@ -212,7 +214,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: LOCAL_CREDENTIALS,
     },
-Capability {
+    Capability {
         id: "workflows.connect_crypto_exchange",
         name: "Connect Crypto Exchange",
         domain: "workflows",
@@ -222,7 +224,7 @@ Capability {
         status: CapabilityStatus::ComingSoon,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "automation.task_sources",
         name: "Task Sources",
         domain: "automation",
@@ -234,7 +236,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: DERIVED_TO_BACKEND,
     },
-Capability {
+    Capability {
         id: "automation.discover_workflows",
         name: "Suggested Workflows (Flow Scout)",
         domain: "flows",
@@ -249,7 +251,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: DERIVED_TO_BACKEND,
     },
-Capability {
+    Capability {
         id: "automation.flow_memory_node",
         name: "Memory Node (Flows)",
         domain: "flows",
@@ -266,7 +268,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: LOCAL_RAW,
     },
-Capability {
+    Capability {
         id: "automation.flow_dedup_node",
         name: "Dedup Node (Flows)",
         domain: "flows",
@@ -290,7 +292,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: LOCAL_RAW,
     },
-Capability {
+    Capability {
         id: "automation.view_cron_jobs",
         name: "View Cron Jobs",
         domain: "automation",
@@ -300,7 +302,7 @@ Capability {
         status: CapabilityStatus::Stable,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "automation.set_job_intervals",
         name: "Set Job Intervals",
         domain: "automation",
@@ -310,7 +312,7 @@ Capability {
         status: CapabilityStatus::Stable,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "automation.view_execution_history",
         name: "View Execution History",
         domain: "automation",
@@ -320,7 +322,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "automation.morning_briefing",
         name: "Morning Briefing",
         domain: "automation",
@@ -330,7 +332,7 @@ Capability {
         status: CapabilityStatus::Beta,
         privacy: None,
     },
-Capability {
+    Capability {
         id: "automation.crypto_agent",
         name: "Crypto Wallet",
         domain: "automation",
@@ -343,5 +345,25 @@ Capability {
         how_to: "Automatic — the assistant loads the web3 skill when a crypto wallet or market action is requested. Connect a wallet via Settings > Recovery Phrase first.",
         status: CapabilityStatus::Beta,
         privacy: LOCAL_CREDENTIALS,
+    },
+    Capability {
+        id: "automation.autonomous_work",
+        name: "Autonomous Work",
+        domain: "automation",
+        category: CapabilityCategory::Automation,
+        description: "Durable multi-turn project execution with verification checkpoints, automated test-driven progress review, and unattended background continuation.",
+        how_to: "Ask the assistant to execute an autonomous project, or call autonomous_work start in chat.",
+        status: CapabilityStatus::Beta,
+        privacy: None,
+    },
+    Capability {
+        id: "automation.coding_worker",
+        name: "Coding Worker Delegation",
+        domain: "automation",
+        category: CapabilityCategory::Automation,
+        description: "Independent subagent worker for repository inspection, bounded file implementation, and test verification.",
+        how_to: "The orchestrator automatically delegates modular code tasks to the coding worker specialist.",
+        status: CapabilityStatus::Beta,
+        privacy: None,
     },
 ];

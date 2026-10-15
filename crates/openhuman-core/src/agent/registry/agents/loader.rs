@@ -33,7 +33,7 @@ use crate::agent::harness::host_definition::{AgentDefinition, PromptBuilder};
 use anyhow::{Context, Result};
 use std::collections::HashMap;
 use tinyagents_definition::{
-    validate_tier_transition, AgentTier, DefinitionSource, PromptSource, SubagentEntry,
+    AgentTier, DefinitionSource, PromptSource, SubagentEntry, validate_tier_transition,
 };
 
 /// A single built-in agent: its id plus the metadata TOML and a
@@ -58,6 +58,11 @@ pub const BUILTINS: &[BuiltinAgent] = &[
         id: "orchestrator",
         toml: include_str!("orchestrator/agent.toml"),
         prompt_fn: super::orchestrator::prompt::build,
+    },
+    BuiltinAgent {
+        id: "coding_worker",
+        toml: include_str!("coding_worker/agent.toml"),
+        prompt_fn: super::coding_worker::prompt::build,
     },
     // `planner` and `critic` are not delegable from chat (the orchestrator does
     // not list them): they exist for the `parallel_research_cross_check`

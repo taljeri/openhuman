@@ -20,6 +20,7 @@
 //!   within a parent agent's tool loop, enabling hierarchical delegation.
 pub mod artifacts;
 pub(crate) mod attachments;
+pub mod autonomous;
 pub use attachments::host::HostAttachment;
 pub mod bus;
 pub mod context;

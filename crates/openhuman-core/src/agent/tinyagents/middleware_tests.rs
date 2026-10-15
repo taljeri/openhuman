@@ -1,7 +1,7 @@
 use super::approval::approval_tool_name;
 use super::repeated_failure::{is_body_level_failure, user_actionable_escalation};
 use super::tool_output::{
-    is_compaction_exempt, is_truncation_exempt, COMPACTION_EXEMPT_TOOLS, SAMPLING_TOOLS,
+    COMPACTION_EXEMPT_TOOLS, SAMPLING_TOOLS, is_compaction_exempt, is_truncation_exempt,
 };
 use super::turn_context::DEFAULT_TOOL_RESULT_BUDGET_BYTES;
 use crate::agent::tinyagents::middleware::embedder_hooks::EmbedderToolHooksMiddleware;
@@ -424,3 +424,6 @@ mod tool_output_artifact_tests;
 mod tool_output_tests;
 #[path = "middleware_tool_policy_tests.rs"]
 mod tool_policy_tests;
+
+#[path = "middleware_scan_recovery_tests.rs"]
+mod scan_recovery_tests;

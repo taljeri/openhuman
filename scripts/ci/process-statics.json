@@ -128,5 +128,45 @@
     "category": "A",
     "reason": "The process's registry of weak handles to the rebindable session-store providers a host installed, so a workspace switch (storage::rebind) can point each at the new backend. It holds no records and no tenant state, only Weak references; the stores' data lives in the storage backend. A test builds its own StoreRegistry, so rebinding one never moves another's stores.",
     "verification": "agent/session_store/rebound_tests.rs: a_registry_rebind_leaves_other_registries_alone"
+  },
+  {
+    "file": "crates/openhuman-core/src/agent/autonomous/observation.rs",
+    "scope": "",
+    "name": "RUNS",
+    "type": "Lazy<Mutex<HashMap<String,Observed>>>",
+    "count": 1,
+    "category": "B",
+    "reason": "Ephemeral run observations keyed by request id; entries are scoped to a single autonomous work slice and removed upon completion.",
+    "verification": "agent/autonomous/service_tests.rs: autonomous_work_runs_and_completes"
+  },
+  {
+    "file": "crates/openhuman-core/src/agent/autonomous/service.rs",
+    "scope": "",
+    "name": "SUPPRESSED",
+    "type": "once_cell::sync::Lazy<std::sync::Mutex<std::collections::HashSet<String>>>",
+    "count": 1,
+    "category": "B",
+    "reason": "Tracks thread IDs whose autonomous scheduling notifications have been temporarily suppressed during active user turns; holds only thread ID strings.",
+    "verification": "agent/autonomous/service_tests.rs: autonomous_work_runs_and_completes"
+  },
+  {
+    "file": "crates/openhuman-core/src/agent/autonomous/service.rs",
+    "scope": "",
+    "name": "STARTED",
+    "type": "AtomicBool",
+    "count": 1,
+    "category": "A",
+    "reason": "Process-wide lifecycle flag indicating whether the autonomous service loop has been started; carries no tenant data.",
+    "verification": "agent/autonomous/service_tests.rs: autonomous_work_runs_and_completes"
+  },
+  {
+    "file": "crates/openhuman-core/src/agent/autonomous/store.rs",
+    "scope": "",
+    "name": "LOCK",
+    "type": "Lazy<Mutex<()>>",
+    "count": 1,
+    "category": "A",
+    "reason": "Serializes disk file write operations for autonomous tasks within the process; unit mutex carrying no tenant data.",
+    "verification": "agent/autonomous/store_tests.rs: atomic_write_roundtrips"
   }
 ]
